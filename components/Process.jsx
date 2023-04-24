@@ -26,7 +26,7 @@ const Process = () => {
             </Box>
         </Grid>
     }
-    return <Box className="pt-10 pb-[80px] flex flex-col justify-center items-center " sx={{
+    return <Box className="pt-10 pb-[200px] flex flex-col justify-center items-center " sx={{
         bgcolor: colors.black[600] + "!important",
     }}>
         <Typography color={"white"} variant="h1" fontFamily="Questrial" className=" ">

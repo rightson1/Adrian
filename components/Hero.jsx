@@ -22,10 +22,10 @@ const Hero = () => {
         <Typography color={colors.red[600]} fontFamily="Questrial" className="text-[30px]  font-[400]">
             ATHLETS FITNESS CLUB
         </Typography>
-        <Typography color={"white"} variant="h1" className="font-[900] text-[70px]">
+        <Typography color={"white"} variant="h1" className="font-[900] text-[50px] md:text-[70px]">
             TRAIN THE
         </Typography>
-        <Typography color={"white"} variant="h3" className="font-[300] my-1 text-[50px]">
+        <Typography color={"white"} variant="h3" className="font-[300] my-1 text-[30px] md:text-[50px]">
             FIGHTER IN YOU
         </Typography>
 
