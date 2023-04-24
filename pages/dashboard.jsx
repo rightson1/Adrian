@@ -38,15 +38,15 @@ const Index = () => {
     const userDetails = [
         {
             title: "User Name",
-            excerpt: user.displayName
+            excerpt: user?.displayName
         },
         {
             title: "Email",
-            excerpt: user.email
+            excerpt: user?.email
         },
         {
             title: "Level",
-            excerpt: user.level
+            excerpt: user?.level
         }
 
 
