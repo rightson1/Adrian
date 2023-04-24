@@ -30,7 +30,6 @@ const items = [
 const submit = (e) => {
     e.preventDefault();
     const { name, difficulty, type } = e.target.elements;
-    console.log(name.value, difficulty.value, type.value)
 }
 const Index = () => {
     const { colors } = useGlobalProvider();

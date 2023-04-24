@@ -18,7 +18,8 @@ const Chat = () => {
     const [foodRes, setFoodRes] = useState(null)
     const [messages, setMessages] = useState([])
     const [last, setLast] = useState(null)
-    const submit = () => {
+    const submit = (e) => {
+        e.preventDefault(0);
         const data = [{ text, own: true }]
         axios.post('/api/nlp', { name: text }).then((res) => {
             data.push({ text: res.data.answer, own: false, doubts: res.data.doubts })
@@ -29,10 +30,10 @@ const Chat = () => {
             console.log(e)
         })
         setText(null)
+        e.target.reset();
     }
     const chatWindowRef = useRef();
     const [open, setOpen] = React.useState(false);
-
     useEffect(() => {
         if (chatWindowRef.current) {
             chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
@@ -160,9 +161,9 @@ const Chat = () => {
                             </Box>
 
                     }
-                    <Box className="flex  gap-2  mt-10">
-                        <input type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder="Enter your message " id="name" name="name" className="rounded-md p-2 outline-none w-full " />
-                        <IconButton onClick={submit}>
+                    <Box className="flex  gap-2  mt-10" component="form" onSubmit={submit}>
+                        <input type="text" onChange={(e) => setText(e.target.value)} placeholder="Enter your message " id="name" className="rounded-md p-2 outline-none w-full " />
+                        <IconButton type="submit">
                             <SendIcon className="text-[30px] text-white -rotate-[38deg]" />
                         </IconButton>
                     </Box>
