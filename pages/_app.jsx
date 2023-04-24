@@ -33,7 +33,7 @@ function MyApp(props) {
       <CacheProvider value={emotionCache}>
         <ThemeProvider>
           <div className="w-[100vw] ">
-            <div className="">
+            <div className="w-screen overflow-x-hidden">
               <Navbar homepage={Component.homepage} />
               <Component {...pageProps} />
               <Toaster />

@@ -4,7 +4,7 @@ import { Box, Grid, Typography, Button } from "@mui/material";
 
 const Contact = () => {
     const { colors } = useGlobalProvider()
-    return <Box bgcolor={colors.black[600]} className="pt-10 pb-[100px] px-10">
+    return <Box bgcolor={colors.black[600]} className="pt-10 pb-[100px] px-3 md:px-10">
         <Grid container spacing={5}>
             <Grid item xs={12} md={6} className="flex flex-col  gap-6">
                 <Typography color={"white"} variant="h3" fontFamily="Questrial" className="">

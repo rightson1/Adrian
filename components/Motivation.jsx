@@ -14,7 +14,7 @@ const Motivation = () => {
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
         }}
-    > <div className="flex flex-col self-center md:self-end  w-[600px] items-end">
+    > <div className="flex flex-col self-center md:self-end w-full  md:w-[600px] items-center md:items-end">
             <Typography color={"white"} variant="h3" className="font-[800] my-1 text-[30px] md:text-[50px] text-right">
                 GET OUT OF YOUR
             </Typography>
@@ -23,7 +23,7 @@ const Motivation = () => {
                 COMFORT ZONE
             </Typography>
 
-            <Typography color={colors.black[100]} variant="body1" fontFamily="Questrial" className="my-1 text-right w-1/2">
+            <Typography color={colors.black[100]} variant="body1" fontFamily="Questrial" className="my-1 text-right md:w-1/2">
                 Get started on your fitness journey today and become the best version of yourself!
             </Typography>
         </div>
