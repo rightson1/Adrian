@@ -141,7 +141,7 @@ const Chat = () => {
 
                                                         className="underline" color={colors.teal[400]}>
                                                         {
-                                                            item.doubts?.map(({ intent }) => <Typography className="cursor-pointer" onClick={(e) => setText(intent)}>{intent}</Typography>)
+                                                            item.doubts?.map(({ intent }, index) => <Typography key={index} className="cursor-pointer" onClick={(e) => setText(intent)}>{intent}</Typography>)
                                                         }
                                                     </Typography>
 

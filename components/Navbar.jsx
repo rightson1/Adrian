@@ -104,8 +104,8 @@ function Navbar({ homepage }) {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {pages.map((page) => (
-                                <Link passHref href={`/${page.toLowerCase()}`}>
+                            {pages.map((page, index) => (
+                                <Link passHref href={`/${page.toLowerCase()}`} key={index}>
                                     <MenuItem key={page} onClick={handleCloseNavMenu}>
                                         <Typography textAlign="center">{page}</Typography>
                                     </MenuItem>
@@ -139,9 +139,9 @@ function Navbar({ homepage }) {
                         className="justify-center items-center"
 
                     >
-                        {pages.map((page) => (
+                        {pages.map((page, index) => (
                             <Link
-                                href={`/${page.toLowerCase()}`}
+                                href={`/${page.toLowerCase()}`} key={index}
                             >
                                 <Button
                                     key={page}
