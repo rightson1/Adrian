@@ -18,8 +18,8 @@ const Ex = () => {
     const items =
     {
         title: slug?.toUpperCase(),
-        url: `/${slug.charAt(0).toUpperCase() + slug.slice(1)}.gif`,
-        img: `/${slug.charAt(0).toUpperCase() + slug.slice(1)}.png`,
+        url: `./${slug.charAt(0).toUpperCase() + slug.slice(1)}.gif`,
+        img: `./${slug.charAt(0).toUpperCase() + slug.slice(1)}.png`,
         excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam tincidunt, nunc elit aliquam mauris, eget aliquam nisl nisl sit amet lorem. Sed euismod, nunc ut aliquam tincidunt, nunc elit aliquam mauris, eget aliquam nisl nisl sit amet lorem.",
 
     }
