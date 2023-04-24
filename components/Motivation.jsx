@@ -15,15 +15,15 @@ const Motivation = () => {
             backgroundPosition: 'center',
         }}
     > <div className="flex flex-col self-center md:self-end w-full  md:w-[600px] items-center md:items-end">
-            <Typography color={"white"} variant="h3" className="font-[800] my-1 text-[30px] md:text-[50px] text-right">
+            <Typography color={"white"} variant="h3" className="font-[800] my-1 text-[30px] md:text-[50px] text-center md:text-right">
                 GET OUT OF YOUR
             </Typography>
 
-            <Typography color={colors.red[500]} variant="h1" className="font-[900] text-[50px] md:text-[70px] text-right">
+            <Typography color={colors.red[500]} variant="h1" className="font-[900] text-[50px] md:text-[70px] text-center md:text-right">
                 COMFORT ZONE
             </Typography>
 
-            <Typography color={colors.black[100]} variant="body1" fontFamily="Questrial" className="my-1 text-right md:w-1/2">
+            <Typography color={colors.black[100]} variant="body1" fontFamily="Questrial" className="my-1 text-center md:text-right  md:w-1/2">
                 Get started on your fitness journey today and become the best version of yourself!
             </Typography>
         </div>
