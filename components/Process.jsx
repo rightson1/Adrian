@@ -36,7 +36,7 @@ const Process = () => {
             <Gcontainer icon={<AutoGraphIcon className="text-[40px]" />} text={"      ANALYSE YOUR GOALS"} />
             <Gcontainer icon={<ScienceIcon className="text-[40px]" />} text={"WORK HARD ON IT"} />
             <Gcontainer icon={<NetworkCheckIcon className="text-[40px]" />} text={"IMPROVE YOU"} />
-            <Gcontainer icon={<EmojiEventsIcon className="text-[40px]" />} text={"ACHIEVE YOUR DESTINY"} />
+            <Gcontainer icon={<EmojiEventsIcon className="text-[40px]" />} text={"ACHIEVE IT"} />
         </Grid>
 
     </Box>;
