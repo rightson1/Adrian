@@ -5,7 +5,7 @@ import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import InvoicePdf from './Invoice';
 import Modal from '@mui/material/Modal';
-// import { PDFViewer } from '@react-pdf/renderer';
+import { PDFViewer } from '@react-pdf/renderer';
 import Form from "./Form";
 import { useAuth } from "../utils/authContext";
 
@@ -113,9 +113,9 @@ const Pricing = () => {
             onClose={() => setOpen(false)}
         >
             <Box sx={style} className="p-10 flex flex-col items-end">
-                {/* <PDFViewer width="500px" height="500px">
+                <PDFViewer width="500px" height="500px">
                     <InvoicePdf receiptData={values} />
-                </PDFViewer> */}
+                </PDFViewer>
                 <Button onClick={() => setOpen(false)} className="w-[200px] s text-white my-5"
                     sx={{
                         bgcolor: colors.red[700] + "!important",

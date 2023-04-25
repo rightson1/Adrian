@@ -7,8 +7,6 @@ import Slide from "../../components/Slide";
 import Pcon from "../../components/Pcon";
 import { useInstructions } from "../../utils/hooks/useApi";
 import Instructions from "../../components/Instructions";
-import Say from 'react-say';
-import { SayButton } from 'react-say';
 const Ex = () => {
     const { colors } = useGlobalProvider();
     const { slug: name } = useRouter().query;
@@ -25,12 +23,6 @@ const Ex = () => {
     }
 
     return <Box className="">
-        <SayButton
-            onClick={event => console.log(event)}
-            speak="A quick brown fox jumped over the lazy dogs."
-        >
-            Tell me a story
-        </SayButton>
 
         <Box className="w-screen py-20 gap-2 text-white flex justify-center items-center flex-col "
 
