@@ -5,9 +5,26 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography"
 import Link from "next/link";
+import { useAuth } from "../utils/authContext";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/router";
 
 const Slide = ({ items, dashboard }) => {
-
+    const { user } = useAuth();
+    const router = useRouter();
+    const submit = (link, title) => {
+        if (!user.plan) {
+            toast.error("You are not subscribed to any plan")
+        } else if (user.plan === "beginner") {
+            if (title !== "beginner") {
+                toast.error("You are not subscribed to this plan");
+            } else {
+                router.push(link)
+            }
+        } else {
+            router.push(link)
+        }
+    }
     return <Box
         sx={{
             "& .swiper-pagination-bullet": {
@@ -15,10 +32,7 @@ const Slide = ({ items, dashboard }) => {
             }
         }}>   <Swiper
             modules={[Navigation, Pagination, A11y, Autoplay]}
-            autoplay={{
-                delay: 5000,
-                disableOnInteraction: false
-            }}
+            autoplay={{ delay: 50000 }}
             pagination={{ clickable: true }}
 
             slidesPerView={1}
@@ -47,23 +61,20 @@ const Slide = ({ items, dashboard }) => {
 
                                     {
                                         dashboard && <div className="flex justify-center">
-                                            <Link
-                                                href={`/workout/${title?.toLowerCase()}`}
+
+                                            <Button onClick={() => submit(`/workout/${title?.toLowerCase()}`, title)}
+                                                className="w-[150px] "
+                                                sx={{
+                                                    border: "1px solid white",
+                                                    color: "white",
+                                                    "&:hover": {
+                                                        color: "black",
+                                                        backgroundColor: "white"
+                                                    }
+                                                }}
                                             >
-                                                <Button
-                                                    className="w-[150px] "
-                                                    sx={{
-                                                        border: "1px solid white",
-                                                        color: "white",
-                                                        "&:hover": {
-                                                            color: "black",
-                                                            backgroundColor: "white"
-                                                        }
-                                                    }}
-                                                >
-                                                    Begin
-                                                </Button>
-                                            </Link>
+                                                Begin
+                                            </Button>
                                         </div>
                                     }
 

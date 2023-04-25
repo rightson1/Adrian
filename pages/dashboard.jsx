@@ -43,11 +43,6 @@ const Index = () => {
             title: "Email",
             excerpt: user?.email
         },
-        {
-            title: "Level",
-            excerpt: user?.level
-        }
-
 
     ]
 
@@ -90,19 +85,6 @@ const Index = () => {
                             Name
                         </Typography>
                         <input type="text" id="name" name="name" className=" p-2 outline-none w-full" />
-                    </Grid>
-
-                    <Grid item xs={12} md={6} className="flex flex-col gap-2">
-                        <Typography className="   text-white " component="label" htmlFor="name" fontFamily="Questrial">
-                            Difficulty
-                        </Typography>
-                        <select name="difficulty" className=" p-2 outline-none w-full" id="difficulty">
-                            {
-                                difficulty.map((type, index) => (
-                                    <option key={index} value={type} className="capitalize">{type}</option>
-                                ))
-                            }
-                        </select>
                     </Grid>
                     <Grid item xs={12} md={6} className="flex flex-col gap-2">
                         <Typography className="   text-white " component="label" htmlFor="type" fontFamily="Questrial">

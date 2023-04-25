@@ -8,8 +8,12 @@ import { useGlobalProvider } from "../utils/themeContext";
 import axios from "axios";
 import { useRef } from "react";
 import { useEffect } from "react";
+import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import { SayButton } from 'react-say'
 import { toast } from "react-hot-toast";
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import Foods from "./Foods";
+
 
 const Chat = () => {
     const { colors } = useGlobalProvider();
@@ -18,16 +22,28 @@ const Chat = () => {
     const [foodRes, setFoodRes] = useState(null)
     const [messages, setMessages] = useState([])
     const [last, setLast] = useState(null)
+    const [mic, setMic] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const {
+        transcript,
+        listening,
+        resetTranscript,
+        browserSupportsSpeechRecognition
+    } = useSpeechRecognition();
+
+
     const submit = (e) => {
+        setLoading(true)
         e.preventDefault(0);
         const data = [{ text, own: true }]
-        axios.post('/api/nlp', { name: text }).then((res) => {
+        axios.post('/api/nlp', { name: text || transcript }).then((res) => {
             data.push({ text: res.data.answer, own: false, doubts: res.data.doubts })
             setLast(res.data.answer)
             setMessages([...messages, ...data]);
-
+            setLoading(false)
         }).catch((e) => {
             console.log(e)
+            setLoading(false)
         })
         setText(null)
         e.target.reset();
@@ -48,71 +64,24 @@ const Chat = () => {
             setLast(null)
         }
     }, [last])
+    useEffect(() => {
+        if (transcript) {
+            setText(transcript)
 
-    const submitFood = () => {
-        const api = () => axios.get(`https://api.api-ninjas.com/v1/nutrition?query=${food}`, {
-            headers: {
-                "X-Api-Key": "UCUER7elJh39pQXJZSA0pg==mZ31FCMMuLzvQHaR",
-
-            }
-        }).then((res) => {
-
-            setFoodRes(res.data[0])
-        })
-        toast.promise(api(),
-            {
-                loading: 'Fetching..',
-                success: <b>Done!</b>,
-                error: <b>Could not save.</b>,
-            })
+        }
     }
+        , [transcript])
+
+    useEffect(() => {
+        if (mic) {
+            SpeechRecognition.startListening({ continuous: true })
+        } else {
+            SpeechRecognition.stopListening()
+        }
+    }, [mic])
     return <Grid container bgcolor={colors.black[600]} className="p-5" spacing={3}>
-        <Grid item xs={12} md={4} className="flex flex-col gap-4">
-            <Typography className=" w-full text-center text-white underline" variant="h3" fontFamily="Questrial">
-                Healthy Tips
-            </Typography>
-            <Typography className=" w-full text-center text-white " variant="h6" fontFamily="Questrial" >
-                You wanna  know the nutrients in your foods?
-                Type them below and get the starts
-            </Typography>
-            <Box className="flex  gap-2  mt-10">
-                <Box component="input" type="text" value={food} onChange={(e) => setFood(e.target.value)} placeholder="Enter your message " id="name" name="name" className="rounded-md p-2 outline-none w-full " />
-                <Button onClick={submitFood} className="text-white" sx={{
-                    bgcolor: colors.red[500] + "!important",
-                }}>
-                    Send
-                </Button>
-
-            </Box>
-            <Typography className=" w-full text-center text-white  underline" variant="h6" fontFamily="Questrial" >
-                Results
-            </Typography>
-            {
-                !foodRes && <Box className="bg-white w-full  min-h-[100px] rounded text-black "
-                >
-
-
-
-                </Box>
-            }
-            {foodRes && <div className="bg-white rounded-md p-5">
-                <h1 className="text-xl font-bold mb-2">{foodRes.name}</h1>
-                <ul className="list-disc pl-5">
-                    <li>Calories: {foodRes.calories}</li>
-                    <li>Serving Size (g): {foodRes.serving_size_g}</li>
-                    <li>Total Fat (g): {foodRes.fat_total_g}</li>
-                    <li>Saturated Fat (g): {foodRes.fat_saturated_g}</li>
-                    <li>Protein (g): {foodRes.protein_g}</li>
-                    <li>Sodium (mg): {foodRes.sodium_mg}</li>
-                    <li>Potassium (mg): {foodRes.potassium_mg}</li>
-                    <li>Cholesterol (mg): {foodRes.cholesterol_mg}</li>
-                    <li>Total Carbohydrates (g): {foodRes.carbohydrates_total_g}</li>
-                    <li>Fiber (g): {foodRes.fiber_g}</li>
-                    <li>Sugar (g): {foodRes.sugar_g}</li>
-                </ul>
-            </div>}
-        </Grid>
-        <Grid item xs={12} md={8}>
+        <Foods />
+        <Grid item xs={12} md={7}>
 
             <Typography className=" w-full text-center text-white underline" variant="h3" fontFamily="Questrial">
                 Chat Gym
@@ -125,9 +94,10 @@ const Chat = () => {
                             {
                                 messages.map((item, index) => {
                                     return <Box key={index} sx={{
-                                        alignSelf: item.own ? "end" : "start"
+                                        alignSelf: item.own ? "end" : "start",
+                                        bgcolor: item.own ? "white" : colors.teal[100],
                                     }}
-                                        className="flex p-5 bg-white rounded-md  w-[70%] flex-col">
+                                        className={`flex p-5   w-[70%] flex-col ${item.own ? "rounded-tl-lg rounded-bl-lg  rounded-br-lg" : "rounded-tr-lg rounded-bl-lg rounded-br-lg"}`}>
                                         <Typography>
                                             {item.text}
                                         </Typography>
@@ -142,7 +112,7 @@ const Chat = () => {
 
                                                         className="underline" color={colors.teal[400]}>
                                                         {
-                                                            item.doubts?.map(({ intent }, index) => <Typography key={index} className="cursor-pointer" onClick={(e) => setText(intent)}>{intent}</Typography>)
+                                                            item.doubts?.map(({ intent }, index) => <button key={index} className="cursor-pointer" onClick={(e) => setText(intent)}>{intent}</button>)
                                                         }
                                                     </Typography>
 
@@ -162,9 +132,16 @@ const Chat = () => {
 
                     }
                     <Box className="flex  gap-2  mt-10" component="form" onSubmit={submit}>
-                        <input type="text" onChange={(e) => setText(e.target.value)} placeholder="Enter your message " id="name" className="rounded-md p-2 outline-none w-full " />
-                        <IconButton type="submit">
-                            <SendIcon className="text-[30px] text-white -rotate-[38deg]" />
+                        <input type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder="Enter your message " id="name" className="rounded-md p-2 outline-none w-full " />
+                        <Button onClick={() => setMic(!mic)
+                        } className="text-white" sx={{
+                            bgcolor: (mic ? colors.red[500] : colors.teal[500]) + "!important",
+                        }}>
+                            <KeyboardVoiceIcon />
+                        </Button>
+
+                        <IconButton type="submit" className="text-white text-xl">
+                            {loading ? '....' : <SendIcon className="text-[30px] text-white -rotate-[38deg]" />}
                         </IconButton>
                     </Box>
                 </div>

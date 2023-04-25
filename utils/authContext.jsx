@@ -2,7 +2,7 @@
 import { createContext, useContext, useEffect } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import { auth, db } from "./firebase";
-import { collection, query, where, getDocs, setDoc, doc } from "firebase/firestore";
+import { collection, query, where, getDocs, setDoc, doc, addDoc } from "firebase/firestore";
 import { useState } from "react";
 import { useRouter } from "next/router";;
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
@@ -94,7 +94,20 @@ export const AuthProvider = ({ children }) => {
                     photoURL: user.photoURL,
                     uid: user.uid,
                 }
-                setDoc(doc(collection(db, "users"), user.uid), data).then(() => err(false)).catch((e) => err(e))
+                const q = query(collection(db, "users"), where("uid", "==", user.uid));
+                getDocs(q).then((res) => {
+                    const [remoteUser, ...rest] = res.docs.map((doc) => {
+                        return { id: doc.id, ...doc.data() }
+                    })
+                    if (remoteUser) {
+                    } else {
+                        addDoc(collection(db, "users"), data).then(() => err(false)).catch((e) => err(e))
+                    }
+                }).catch((e) => {
+                    console.log(e)
+                })
+
+
             }).then(() => err(false)).catch((e) => err(e))
     }
 

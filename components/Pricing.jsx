@@ -2,12 +2,42 @@ import React from "react";
 import { useGlobalProvider } from "../utils/themeContext";
 import { Box, Button, Divider, Grid, Typography } from "@mui/material";
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import InvoicePdf from './Invoice';
+import Modal from '@mui/material/Modal';
+import { PDFViewer } from '@react-pdf/renderer';
+import Form from "./Form";
+import { useAuth } from "../utils/authContext";
 
 const Pricing = () => {
-    const { colors } = useGlobalProvider()
+    const { colors } = useGlobalProvider();
+    const [open, setOpen] = React.useState(false);
+    const { user, signInWithGoogle } = useAuth();
+    const now = new Date();
+    const [plan, setPlan] = React.useState(false);
+    const [values, setValues] = React.useState({
+        date: `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()}`,
+        subscriptionName: "",
+        memberName: "",
+        memberEmail: "",
+        amount: "",
+        name: "",
+        receiptNumber: Math.floor(Math.random() * 1000000)
+    });
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+    };
 
-    const Card = ({ list, title, price, middle }) => {
+
+    const Card = ({ list, title, price, middle, name }) => {
         return <Grid item xs={12} md={4} >
+
             <Box bgcolor={middle ? colors.red[500] : colors.black[700]} className="w-full h-full py-10 rounded-md flex flex-col justify-center gap-2 shadow-lg"
             >
 
@@ -40,12 +70,24 @@ const Pricing = () => {
                     }
 
                 </Box>
-                <Button className="w-[200px] self-center text-white mb-20 mt-10"
-                    sx={{
-                        bgcolor: (middle ? colors.red[700] : colors.black[900]) + "!important",
-                    }}>
-                    Submit
-                </Button>
+                {
+                    user ? <Button onClick={() => {
+                        setPlan(title);
+                        setValues({ ...values, subscriptionName: title, amount: price, name });
+                    }} className="w-[200px] self-center text-white mb-20 mt-10"
+                        sx={{
+                            bgcolor: (middle ? colors.red[700] : colors.black[900]) + "!important",
+                        }}>
+                        Subscribe Now
+                    </Button> :
+                        <Button onClick={signInWithGoogle} className="w-[200px] self-center text-white mb-20 mt-10"
+                            sx={{
+                                bgcolor: (middle ? colors.red[700] : colors.black[900]) + "!important",
+                            }}>
+                            Subscribe Now
+                        </Button>
+
+                }
             </Box>
 
         </Grid>
@@ -60,12 +102,30 @@ const Pricing = () => {
             Go with the right one
         </Typography>
         <Grid container spacing={5} className="py-5">
-            <Card {...{ list: list1, title: "BASIC PLAN", price: "250" }} />
-            <Card {...{ list: list2, title: "IINTERMEDIATE PLAN", price: "500", middle: true }} />
-            <Card {...{ list: list3, title: "ADVANCED PLAN", price: "750" }} />
+            <Card {...{ list: list1, title: "BASIC PLAN", price: "250", name: "beginner" }} />
+            <Card {...{ list: list2, title: "INTERMEDIATE PLAN", price: "500", middle: true, name: "intermediate" }} />
+            <Card {...{ list: list3, title: "ADVANCED PLAN", price: "750", name: "advanced" }} />
 
 
         </Grid>;
+        <Modal
+            open={open}
+            onClose={() => setOpen(false)}
+        >
+            <Box sx={style} className="p-10 flex flex-col items-end">
+                <PDFViewer width="500px" height="500px">
+                    <InvoicePdf receiptData={values} />
+                </PDFViewer>
+                <Button onClick={() => setOpen(false)} className="w-[200px] s text-white my-5"
+                    sx={{
+                        bgcolor: colors.red[700] + "!important",
+                    }}>
+                    Close
+                </Button>
+            </Box>
+
+        </Modal>
+        <Form {...{ plan, setPlan, setValues, setOpen, values }} />
     </Box>
 };
 const list1 = [

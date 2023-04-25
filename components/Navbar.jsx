@@ -13,13 +13,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useAuth } from '../utils/authContext';
-import { auth, db } from '../utils/firebase';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { collection, doc, setDoc } from "firebase/firestore";
-import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-const pages = ['Dashboard', 'Pricing', 'Blog'];
+const pages = ['Home', 'Dashboard', 'Pricing', 'Blog'];
 function Navbar({ homepage }) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -105,11 +101,16 @@ function Navbar({ homepage }) {
                             }}
                         >
                             {pages.map((page, index) => (
-                                <Link passHref href={`/${page.toLowerCase()}`} key={index}>
+                                user ? <Link passHref href={page === "Home" ? '/' : `/${page.toLowerCase()}`} key={index}>
                                     <MenuItem key={page} onClick={handleCloseNavMenu}>
                                         <Typography textAlign="center">{page}</Typography>
                                     </MenuItem>
-                                </Link>
+                                </Link> : <MenuItem key={page} onClick={() => {
+                                    handleCloseNavMenu()
+                                    signInWithGoogle()
+                                }}>
+                                    <Typography textAlign="center">{page}</Typography>
+                                </MenuItem>
                             ))}
                         </Menu>
                     </Box>
@@ -140,8 +141,8 @@ function Navbar({ homepage }) {
 
                     >
                         {pages.map((page, index) => (
-                            <Link
-                                href={`/${page.toLowerCase()}`} key={index}
+                            user ? <Link
+                                passHref href={page === "Home" ? '/' : `/${page.toLowerCase()}`} key={index}
                             >
                                 <Button
                                     key={page}
@@ -150,7 +151,17 @@ function Navbar({ homepage }) {
                                 >
                                     {page}
                                 </Button>
-                            </Link>
+                            </Link> :
+                                <Button
+                                    key={page}
+                                    onClick={() => {
+                                        handleCloseNavMenu()
+                                        signInWithGoogle()
+                                    }}
+                                    sx={{ my: 2, color: homepage ? "white" : "black", display: 'block' }}
+                                >
+                                    {page}
+                                </Button>
                         ))}
                     </Box>
 
@@ -176,15 +187,6 @@ function Navbar({ homepage }) {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-
-                            <Link href="/profile">
-                                <MenuItem onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">Profile</Typography>
-                                </MenuItem>
-                            </Link>
-                            <MenuItem onClick={handleCloseUserMenu}>
-                                <Typography textAlign="center">Dashboard</Typography>
-                            </MenuItem>
                             {user ? (<MenuItem onClick={() => {
                                 logout()
                                 handleCloseUserMenu()

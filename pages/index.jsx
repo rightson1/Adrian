@@ -10,6 +10,7 @@ import Contact from "../components/Contact";
 
 const Index = () => {
   const { colors } = useGlobalProvider();
+
   return (
     <Box >
       <Hero />
