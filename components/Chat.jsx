@@ -9,8 +9,6 @@ import axios from "axios";
 import { useRef } from "react";
 import { useEffect } from "react";
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
-import { SayButton } from 'react-say'
-import { toast } from "react-hot-toast";
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import Foods from "./Foods";
 
