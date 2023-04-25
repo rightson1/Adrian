@@ -9,27 +9,13 @@ import axios from "axios";
 import { useRef } from "react";
 import { useEffect } from "react";
 import { toast } from "react-hot-toast";
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 
 const Foods = () => {
     const { colors } = useGlobalProvider();
     const [food, setFood] = useState([])
     const [foodRes, setFoodRes] = useState(null)
-    const [mic, setMic] = useState(false)
-    const {
-        transcript,
-        listening,
-        resetTranscript,
-        browserSupportsSpeechRecognition
-    } = useSpeechRecognition();
-    useEffect(() => {
-        if (mic) {
-            SpeechRecognition.startListening({ continuous: true })
-        } else {
-            SpeechRecognition.stopListening()
-        }
-    }, [mic])
+
     const submitFood = () => {
         const api = () => axios.get(`https://api.api-ninjas.com/v1/nutrition?query=${food}`, {
             headers: {
@@ -48,13 +34,7 @@ const Foods = () => {
             })
 
     }
-    useEffect(() => {
-        if (transcript) {
-            setFood(transcript)
 
-        }
-    }
-        , [transcript])
 
     return <Grid item xs={12} md={5} className="flex flex-col gap-4">
         <Typography className=" w-full text-center text-white underline" variant="h3" fontFamily="Questrial">

@@ -45,7 +45,7 @@ const Ex = () => {
 
     return <Box className="">
         <Slide {...{ items }} />
-        <div className="flex my-10 p-5 md:p-10 ">
+        <div className="flex my-10">
             <Grid container className="" spacing={3}
             >
 

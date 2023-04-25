@@ -2,13 +2,12 @@ import React from "react";
 import { useGlobalProvider } from "../utils/themeContext";
 import { Box, Button, Divider, Grid, Typography } from "@mui/material";
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
-import { PDFDownloadLink } from '@react-pdf/renderer';
-import InvoicePdf from './Invoice';
 import Modal from '@mui/material/Modal';
-// import { PDFViewer } from '@react-pdf/renderer';
 import Form from "./Form";
 import { useAuth } from "../utils/authContext";
-
+const InvoicePDF = dynamic(() => import("./Invoice"), {
+    ssr: false,
+});
 const Pricing = () => {
     const { colors } = useGlobalProvider();
     const [open, setOpen] = React.useState(false);
@@ -113,9 +112,7 @@ const Pricing = () => {
             onClose={() => setOpen(false)}
         >
             <Box sx={style} className="p-10 flex flex-col items-end">
-                {/* <PDFViewer width="500px" height="500px">
-                    <InvoicePdf receiptData={values} />
-                </PDFViewer> */}
+                <Invoice receiptData={values} />
                 <Button onClick={() => setOpen(false)} className="w-[200px] s text-white my-5"
                     sx={{
                         bgcolor: colors.red[700] + "!important",

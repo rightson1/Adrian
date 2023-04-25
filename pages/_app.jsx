@@ -12,6 +12,7 @@ import { ThemeProvider } from "../utils/themeContext";
 import Navbar from "../components/Navbar";
 import "swiper/swiper-bundle.css";
 import { Toaster } from "react-hot-toast";
+import 'regenerator-runtime/runtime';
 function MyApp(props) {
   const clientSideEmotionCache = createEmotionCache();
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;

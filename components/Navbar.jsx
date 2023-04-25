@@ -15,7 +15,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { useAuth } from '../utils/authContext';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-const pages = ['Home', 'Dashboard', 'Pricing', 'Blog'];
+const pages = ['Home', 'Dashboard'];
 function Navbar({ homepage }) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
