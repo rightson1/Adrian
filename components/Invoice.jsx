@@ -56,7 +56,7 @@ const ReceiptPdf = ({ receiptData }) => (
     <Document>
         <Page style={styles.page} size="A5">
             <View style={styles.container}>
-                <Text style={styles.header}>Adrian's Gym</Text>
+                <Text style={styles.header}>Adrians Gym</Text>
                 <Text style={styles.subheader}>Receipt</Text>
                 <View style={styles.row}>
                     <View style={styles.column}>
