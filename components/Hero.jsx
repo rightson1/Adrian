@@ -30,7 +30,7 @@ const Hero = () => {
         </Typography>
 
         <Typography color={colors.black[100]} variant="body1" fontFamily="Questrial" className="my-1 text-center">
-            Welcome to our gym! Join us for a fun and effective workout experience. Get started on your fitness journey today and become the best version of yourself!
+            Welcome to our gym! Join us for a fun and effective workout experience.Get started on your fitness journey today and become the best version of yourself!
         </Typography>
         {
             !user ? <Button className="text-white py-2 px-5 hover:bg-transparent mt-6" onClick={submit} sx={{

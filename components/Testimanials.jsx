@@ -19,7 +19,7 @@ const Testimanials = () => {
         </Typography>
 
         <Typography color={colors.black[100]} variant="body1" fontFamily="Questrial" className="my-1 text-center">
-            Get fit. Achieve goals. Expert trainers. Modern facility. Group classes. Personalized plans. Amenities. Clean & safe. Positive community
+            Get fit. Achieve goals. Expert trainers. Modern facility. Group class. Personalized plans. Amenities. Clean & safe. Positive community
         </Typography>
         <Box component={"img"}
             sx={{
