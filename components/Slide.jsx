@@ -13,17 +13,18 @@ const Slide = ({ items, dashboard }) => {
     const { user } = useAuth();
     const router = useRouter();
     const submit = (link, title) => {
-        if (!user.plan) {
-            toast.error("You are not subscribed to any plan")
-        } else if (user.plan === "beginner") {
-            if (title !== "beginner") {
-                toast.error("You are not subscribed to this plan");
-            } else {
-                router.push(link)
-            }
-        } else {
-            router.push(link)
-        }
+        router.push(link)
+        // if (!user.plan) {
+        //     toast.error("You are not subscribed to any plan")
+        // } else if (user.plan === "beginner") {
+        //     if (title !== "beginner") {
+        //         toast.error("You are not subscribed to this plan");
+        //     } else {
+        //         router.push(link)
+        //     }
+        // } else {
+        //     router.push(link)
+        // }
     }
     return <Box
         sx={{

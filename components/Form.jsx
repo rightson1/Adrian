@@ -22,18 +22,21 @@ export default function Form({ plan, setPlan, setValues, values, setOpen }) {
         setValues({ ...values, ...data, memberEmail: user.email, memberEmail: user.email })
         if (data.code) {
             const userRef = doc(db, "users", user.uid);
-            const update = () => updateDoc(userRef, {
+            toast.loading("Subscribing...")
+            updateDoc(userRef, {
                 plan: values.name
 
             }).then((res) => {
                 setPlan(false);
                 setOpen(true);
+                toast.dismiss();
+                toast.success("Subscribed successfully")
+            }).catch((err) => {
+                console.log(err)
+                toast.dismiss();
+                toast.error("Something went wrong")
             })
-            toast.promise(update(), {
-                loading: 'Loading',
-                success: 'Success',
-                error: 'Error',
-            })
+
         }
         else {
             toast.error("Please fill all fields")

@@ -20,8 +20,7 @@ const Ex = () => {
     const [started, setStarted] = React.useState(false);
     const [users, setUsers] = React.useState([]);
 
-
-    const { data } = useInstructions(name, user?.plan)
+    const { data } = useInstructions(name, user?.plan || "beginner")
     const slug = name || ""
 
     const items =

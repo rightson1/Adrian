@@ -100,8 +100,9 @@ export const AuthProvider = ({ children }) => {
                         return { id: doc.id, ...doc.data() }
                     })
                     if (remoteUser) {
+                        return
                     } else {
-                        addDoc(collection(db, "users"), data).then(() => err(false)).catch((e) => err(e))
+                        setDoc(doc(db, "users", user.uid), data).then(() => err(false)).catch((e) => err(e))
                     }
                 }).catch((e) => {
                     console.log(e)
